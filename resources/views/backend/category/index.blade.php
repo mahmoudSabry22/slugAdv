@@ -15,17 +15,17 @@
             <th class="text-center">Action</th>
         </tr>
     </thead>
-            @forelse($cat as $categories)
+            @forelse($categories as $category)
             <tr>
-                <td>{{$categories->id}}</td>
-                <td>{{$categories->name}}</td>
-                <td>{{ $categories->slag }}</td>
+                <td>{{$category->id}}</td>
+                <td>{{$category->name}}</td>
+                <td>{{ $category->slag }}</td>
                 
                 <td class="text-center" >
-                <a class='btn btn-info btn-xs' href="{{ route('category.edit', $categories->slag) }}"><i class="fa fa-edit"> Edit</i></a>
-                <a class='btn btn-success btn-xs' href="{{ route('category.show', $categories->slag) }}"><i class="fa fa-eye"> show</i></a>
+                <a class='btn btn-info btn-xs' href="{{ route('category.edit', $category->slag) }}"><i class="fa fa-edit"> Edit</i></a>
+                <a class='btn btn-success btn-xs' href="{{ route('category.show', $category->slag) }}"><i class="fa fa-eye"> show</i></a>
                 <a class="btn btn-danger btn-xs">
-                <form method="post" action="{{ route('category.destroy', [$categories->slag]) }}">
+                <form method="post" action="{{ route('category.destroy', [$category->slag]) }}">
                     @method('DELETE')
                     @csrf
                     <button type="submit" class="btn btn-danger btn-xs"><i class="fa fa-trash" >Del</i></button>

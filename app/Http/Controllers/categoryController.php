@@ -3,20 +3,20 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\category;
+use App\Category;
 
 use Illuminate\Support\Str;
-class categoryController extends Controller
+class CategoryController extends Controller
 {
     /**
      * Display a listing of the resource.
      *
      * @return \Illuminate\Http\Response
      */
-    public function index(category $category)
+    public function index(Category $category)
     {
-        $cat = $category->paginate(20);
-        return view('backend.category.index',compact('cat'));
+        $categories = $category->paginate(20);
+        return view('backend.category.index',compact('categories'));
     }
 
     /**
@@ -26,7 +26,8 @@ class categoryController extends Controller
      */
     public function create()
     {
-        return view('backend.category.create',['title'=>'New Category']);
+        $title = 'New Category';
+        return view('backend.category.create',compact('title'));
     }
 
     /**
@@ -39,12 +40,10 @@ class categoryController extends Controller
     {
         $data = $this->validate($request,[
             'name'         => 'required|string|max:15',
-            'slag'  => 'required|string'
+            'slag'         => 'required|string'
         ]);
-
-         $data['slag'] = str_slug($data['slag'],'-');
-         $pr = Category::create($data);
-
+        $data['slag'] = str_slug($data['slag'],'-');
+        $pr = Category::create($data);
         return redirect()->route('category.index');
     }
 
@@ -54,9 +53,10 @@ class categoryController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show(category $category)
+    public function show(Category $category)
     {
-        return view('backend.category.show',compact('category'),['title' => $category->name]);
+        $title =  $category->name;
+        return view('backend.category.show',compact('category','title'));
     }
 
     /**
@@ -65,10 +65,10 @@ class categoryController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit(category $category)
+    public function edit(Category $category)
     {
-        
-        return view('backend.category.edit',compact('category'),['title' => 'edit' . $category->name]);
+        $title =  'edit' . $category->name;
+        return view('backend.category.edit',compact('category','title'));
     }
 
     /**
@@ -78,17 +78,14 @@ class categoryController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, category $category)
+    public function update(Request $request, Category $category)
     {
         $data = $this->validate($request,[
             'name'         => 'required|string|max:15',
-            'slag'  => 'required|string'
+            'slag'         => 'required|string'
         ]);
-
-         $data['slag'] = str_slug($data['slag'],'-');
-         Category::whereId($category->id)->update($data);
-        
-
+        $data['slag'] = str_slug($data['slag'],'-');
+        Category::whereId($category->id)->update($data);
         return redirect()->route('category.index');
     }
 
@@ -98,9 +95,9 @@ class categoryController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy(category $category)
+    public function destroy(Category $category)
     {
-        category::destroy($category->id);
+        Category::destroy($category->id);
         return redirect()->back();
     }
 }

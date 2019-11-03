@@ -36,7 +36,7 @@
                                     <select class="form-control" name="category_id" >
                                         <option value="0" {{ old('parent') == 'parent_id' ? 'selected' : '' }}>Select Category</option>
 
-                                        @foreach($prods as $parent )
+                                        @foreach($categories as $parent )
 
                                         <option value="{{ $parent->id }}" {{ $parent->name == 'category_id' ? 'selected' : '' }}>{{ $parent->name }}</option>
                                         @endforeach
